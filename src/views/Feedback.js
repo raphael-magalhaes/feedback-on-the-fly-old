@@ -67,7 +67,7 @@ export default class Feedback extends React.Component {
     }
 
     render() {
-        const { selected = 'emoji-feliz', notSelected } = this.state
+        const { selected = undefined, notSelected } = this.state
 
         const tristeStyle = selected === 'emoji-triste' ? styles.selected: styles.notSelected
         const neutroStyle = selected === 'emoji-neutro' ? styles.selected: styles.notSelected
