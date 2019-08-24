@@ -11,7 +11,7 @@ const styles = {
       padding: '1rem'
   },
   page: {
-    marginTop: '6rem'
+    marginTop: '8rem'
   }
 }
 
@@ -29,14 +29,8 @@ class App extends React.Component {
 
           <div style={styles.page}>
             <Router>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/feedback">About</Link>
-            </li>
               <Route path="/" exact component={Search}/>
-              <Route path="/feedback" component={Feedback}/>
+              <Route path="/feedback/:username" component={Feedback}/>
             </Router>
           </div>
           
