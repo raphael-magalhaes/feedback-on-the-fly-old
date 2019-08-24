@@ -3,8 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PeopleResultSet from '../components/PeopleResultSet'
-
-const PEOPLE_CIT_SEARCH_URL = 'https://people.cit.com.br/search?q=raphaelms'
+import peopleRepository from '../repository/PeopleRepository'
 
 const styles = {
     text: {
@@ -13,51 +12,27 @@ const styles = {
     }
 }
 
-// TODO: Remove this mocked data.
-const MOCKED_DATA = [
-    {name: 'Rubber Duck 0', username: 'duck0', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Rubber Duck 1', username: 'duck1', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Rubber Duck 2', username: 'duck2', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Rubber Duck 3', username: 'duck3', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Rubber Duck 4', username: 'duck4', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Raphael Magalhães', username: 'raphaelms', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Raphael João', username: 'rafaelms', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'Raphael', username: 'raphaelql', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'},
-    {name: 'João Raphael', username: 'raphaelth', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SL1500_.jpg'}
-]
+
 
 export default class Search extends React.Component {
     state = {
         search: '',
-        data: []
-    }
+        data: [],
+        peoples: [],
+    };
 
     onChangeName = (event) => {
         
         this.setState({
             search: event.target.value
-        }, () => this.onFilter())
-    }
+        }, this.onSearch)
+    };
 
-    onFilter = () => {
-        const { search } = this.state
-
-        let newData = []
-        newData = MOCKED_DATA.filter(data => {
-            return search !== '' && data.username.includes(search)
-        })
-
+    onSearch = async () => {
         this.setState({
-            data: newData
+            data: await peopleRepository.getByName(this.state.search)
         })
-    }
-
-    onSearch = () => {
-
-        this.setState({
-            data: MOCKED_DATA
-        })
-    }
+    };
 
     render() {
         return (
