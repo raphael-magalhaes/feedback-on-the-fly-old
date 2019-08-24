@@ -25,13 +25,15 @@ export default class Search extends React.Component {
         
         this.setState({
             search: event.target.value
-        }, this.onSearch)
+        })
     };
 
-    onSearch = async () => {
-        this.setState({
-            data: await peopleRepository.getByName(this.state.search)
-        })
+    onSearch = async (event) => {
+        if(event.key === 'Enter'){
+            this.setState({
+                data: await peopleRepository.getByName(this.state.search)
+            })
+        }
     };
 
     render() {
@@ -44,6 +46,7 @@ export default class Search extends React.Component {
                     Busca:
                 </Typography>
                 <TextField
+                    onKeyDown={this.onSearch}
                     label="Login"
                     value={this.state.search}
                     onChange={this.onChangeName}

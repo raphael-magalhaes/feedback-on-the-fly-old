@@ -1,7 +1,7 @@
 import React from 'react'
 import ResultImage from './PeopleResult'
 
-const generateResultImages = (data, history) => {
+const generateResultImages = (data = [], history) => {
     return data.map((row, index) => {
         return <ResultImage
             key={index}

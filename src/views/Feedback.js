@@ -1,6 +1,9 @@
 import React from 'react'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import Typography from '@material-ui/core/Typography';
 
 import Feliz from './feliz.jpg'
 import Neutro from './neutro.jpg'
@@ -66,13 +69,17 @@ export default class Feedback extends React.Component {
         })
     }
 
-    render() {
-        const { selected = undefined, notSelected } = this.state
+    handleCloseModal = () => {
+        this.setState({isModalOpen: false})
+    }
 
-        const tristeStyle = selected === 'emoji-triste' ? styles.selected: styles.notSelected
-        const neutroStyle = selected === 'emoji-neutro' ? styles.selected: styles.notSelected
-        const felizStyle = selected === 'emoji-feliz' ? styles.selected: styles.notSelected
-        const coffeeStyle = selected === 'emoji-coffee' ? styles.selected: styles.notSelected
+    render() {
+        const { selected = undefined, isModalOpen } = this.state
+
+        const tristeStyle = selected === 'emoji-triste' || selected === undefined  ? styles.selected: styles.notSelected
+        const neutroStyle = selected === 'emoji-neutro' || selected === undefined ? styles.selected: styles.notSelected
+        const felizStyle = selected === 'emoji-feliz' || selected === undefined ? styles.selected: styles.notSelected
+        const coffeeStyle = selected === 'emoji-coffee' || selected === undefined ? styles.selected: styles.notSelected
 
         return (
             <div style={styles.container}>
@@ -99,9 +106,24 @@ export default class Feedback extends React.Component {
                     value={this.state.feedback}
                     onChange={this.onChangeFeedback}
                 />
-                <Button variant="contained" color="secondary">
-                    Enviar
-                </Button>
+
+                <div style={{textAlign: 'center', display: 'flex', justifyContent: 'center'}}>
+                    <Button style={{display: 'block'}} onClick={() => this.setState({isModalOpen: true})} variant="contained" color="secondary">
+                        Enviar
+                    </Button>
+                </div>
+
+                <Dialog onClose={() =>{}} aria-labelledby="simple-dialog-title" open={isModalOpen}>
+                    <DialogTitle id="simple-dialog-title">Sucesso</DialogTitle>
+                    <Typography style={styles.text}variant="body1" gutterBottom>
+                        Seu feedback foi enviado com sucesso!
+                    </Typography>
+                    <div style={{textAlign: 'right'}}>
+                        <Button style={{width: '5rem', margin: '0.5rem'}} onClick={() => this.setState({isModalOpen: false}, () =>  this.props.history.push(`/`))} variant="contained" color="secondary">
+                            OK
+                        </Button>
+                    </div>
+                </Dialog>
             </div>
         )
     }
