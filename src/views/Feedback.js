@@ -1,13 +1,45 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Button from '@material-ui/core/Button';
+
+import Feliz from './feliz.jpg'
+import Neutro from './neutro.jpg'
+import Triste from './triste.jpg'
+import Coffee from './coffee.jpg'
 
 const styles = {
     container: {
     },
+    textArea: {
+        borderRadius: '15px',
+        padding: '0.5rem',
+        marginBottom: '0.5rem',
+        height: '5rem',
+        width: '20rem'
+    },
+    triste: {
+        width: '5rem'
+    },
+    neutro: {
+        width: '5rem'
+    },
+    feliz: {
+        marginTop: '2px',
+        width: '5rem'
+    },
+    coffee: {
+        width: '6.3rem'
+    },
     text: {
         padding: '1rem'
+    },
+    selected: {
+        borderRadius: '15px',
+        overflow: 'hidden'
+    },
+    notSelected: {
+        overflow: 'hidden',
+        filter: 'grayscale(100%)'
     }
 }
 
@@ -30,39 +62,46 @@ export default class Feedback extends React.Component {
 
     onEmojiClick = (event) => {
         this.setState({
-            selectedEmojiID: event.target.id
+            selected: event.target.id
         })
     }
 
     render() {
+        const { selected = 'emoji-feliz', notSelected } = this.state
+
+        const tristeStyle = selected === 'emoji-triste' ? styles.selected: styles.notSelected
+        const neutroStyle = selected === 'emoji-neutro' ? styles.selected: styles.notSelected
+        const felizStyle = selected === 'emoji-feliz' ? styles.selected: styles.notSelected
+        const coffeeStyle = selected === 'emoji-coffee' ? styles.selected: styles.notSelected
+
         return (
             <div style={styles.container}>
-                <Typography style={styles.text}variant="body1" gutterBottom>
-                    Digite seu feedback:
-                </Typography>
 
-                <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div id="emoji-triste" onClick={this.onEmojiClick}>
-                        Triste
+                <div style={{display: 'flex', justifyContent: 'space-around', marginBottom: '1rem'}}>
+                    <div style={tristeStyle} id="emoji-triste" onClick={this.onEmojiClick}>
+                        <img id="emoji-triste" style={styles.triste} src={Triste} />
                     </div>
-                    <div id="emoji-indiferente" onClick={this.onEmojiClick}>
-                        Indiferente
+                    <div style={neutroStyle} id="emoji-neutro" onClick={this.onEmojiClick}>
+                        <img id="emoji-neutro" style={styles.neutro} src={Neutro} />
                     </div>
-                    <div id="emoji-feliz" onClick={this.onEmojiClick}>
-                        Feliz
+                    <div style={felizStyle} id="emoji-feliz" onClick={this.onEmojiClick}>
+                        <img id="emoji-feliz" style={styles.feliz} src={Feliz} />
                     </div>
-                    <div id="emoji-cafe" onClick={this.onEmojiClick}>
-                        Café
+                    <div style={coffeeStyle} id="emoji-coffee" onClick={this.onEmojiClick}>
+                        <img id="emoji-coffee" style={styles.coffee} src={Coffee} />
                     </div>
                 </div>
 
                 <TextareaAutosize
-                    style={{height: '5rem', width: '20rem'}}
+                    style={styles.textArea}
                     rowsMax={4}
-                    placeholder="Digite aqui seu feedback!"
+                    placeholder="Digite aqui seu feedback."
                     value={this.state.feedback}
                     onChange={this.onChangeFeedback}
                 />
+                <Button variant="contained" color="secondary">
+                    Enviar
+                </Button>
             </div>
         )
     }
