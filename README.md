@@ -1,3 +1,9 @@
+Feedback-on-the-fly
+=======
+
+[![Join the chat at https://gitter.im/feedback-on-the-fly](https://badges.gitter.im/feedback-on-the-fly.svg)](https://gitter.im/feedback-on-the-fly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
